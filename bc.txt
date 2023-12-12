@@ -1,0 +1,188 @@
+
+        // =================================
+
+
+        // if (!$result->isEmpty()) {
+        //     $deletedData = [];
+        //     foreach ($result as $item) {
+        //         $fetchDate = Carbon::now(new DateTimeZone('Asia/Jakarta'));
+
+        //         // Fields
+        //         $dataToInsert = [
+        //             'ISS_NO' => $item->ISS_NO,
+        //             'ISS_DATE' => $item->ISS_DATE,
+        //             'ISS_STATUS' => $item->ISS_STATUS,
+        //             'DO_NO' => $item->DO_NO,
+        //             'MO_NO' => $item->MO_NO,
+        //             'MO_TYPE' => $item->MO_TYPE,
+        //             'po_no' => $item->po_no,
+        //             'PRODUCT_CODE' => $item->PRODUCT_CODE,
+        //             'PRODUCT_DESC' => $item->PRODUCT_DESC,
+        //             'prod_unit' => $item->prod_unit,
+        //             'prod_group' => $item->prod_group,
+        //             'LOT_NUMBER' => $item->LOT_NUMBER,
+        //             'iss_qty' => $item->iss_qty,
+        //             'expired_date' => $item->expired_date,
+        //             'LOCATION_NO' => $item->LOCATION_NO,
+        //             'CUSTOMER_CODE' => $item->CUSTOMER_CODE,
+        //             'CUST_NAME' => $item->CUST_NAME,
+        //             'exp_date' => $item->exp_date,
+        //             'actual_date' => $item->actual_date,
+        //             'loading_date' => $item->loading_date,
+        //             'execdate' => $item->execdate,
+        //             'exp_no' => $item->exp_no,
+        //             'exp_status' => $item->exp_status,
+        //             'forwarder' => $item->forwarder,
+        //             'resi_number' => $item->resi_number,
+        //             'jumlah' => $item->jumlah,
+        //             'total_vol' => $item->total_vol,
+        //             'total_weight' => $item->total_weight,
+        //             'fetch_date' => $fetchDate->format('Y-m-d H:i:s'),
+        //         ];
+
+        //         $filters = [
+        //             'ISS_NO' => $item->ISS_NO,
+        //             'fetch_date' => $item->fetch_date,
+        //         ];
+
+        //         $existingData = PivotMrpBpb::where($filters)->get();
+        //         Log::info('Filters: ', $filters);
+        //         Log::info('Existing Data: ', $existingData->toArray());
+
+
+        //         if (!$existingData->isEmpty()) {
+        //             // Add existing data to the deletedData array
+        //             $deletedData[] = $existingData->toArray();
+
+        //             // Delete existing data based on filters
+        //             PivotMrpBpb::where($filters)->delete();
+        //         }
+
+        //         // Insert new data
+        //         PivotMrpBpb::insert($dataToInsert);
+        //     }
+
+        //     if (!empty($deletedData)) {
+        //         return response()->json([
+        //             'status' => true,
+        //             'message' => 'Data Available Inserted and Updated successfully to mysql_local pivot_mrp_bpb.',
+        //             'data' => $result->map(function ($item) use ($fetchDate) {
+        //                 return array_merge($item->toArray(), ['fetch_date' => $fetchDate->format('Y-m-d H:i:s')]);
+        //             }),
+        //             'deleted_data' => $deletedData,
+        //         ], 200);
+        //     } else {
+        //         return response()->json([
+        //             'status' => false,
+        //             'message' => 'Data Not Available',
+        //             'data' => null,
+        //         ], 404);
+        //     }
+        // }
+        // } catch (\Exception $e) {
+        //     Log::error('Error fetching or inserting/updating data:' . $e->getMessage());
+        //     return response()->json([
+        //         'status' => false,
+        //         'message' => 'Error fetching or inserting/updating data',
+        //         'error' => $e->getMessage(),
+        //     ], 500);
+        // }
+
+
+        // try {
+        //     $perPage = $request->input('per_page', 80);
+        //     $result = BPB::paginate($perPage);
+        //     if (!$result->isEmpty()) {
+        //         $deletedData = [];
+        //         foreach ($result as $item) {
+        //             $fetchDate = Carbon::now();
+        //             $fetchDate = Carbon::now(new DateTimeZone('Asia/Jakarta'));
+        //             // Fields
+        //             $dataToInsert = [
+        //                 'ISS_NO' => $item->ISS_NO,
+        //                 'ISS_DATE' => $item->ISS_DATE,
+        //                 'ISS_STATUS' => $item->ISS_STATUS,
+        //                 'DO_NO' => $item->DO_NO,
+        //                 'MO_NO' => $item->MO_NO,
+        //                 'MO_TYPE' => $item->MO_TYPE,
+        //                 'po_no' => $item->po_no,
+        //                 'PRODUCT_CODE' => $item->PRODUCT_CODE,
+        //                 'PRODUCT_DESC' => $item->PRODUCT_DESC,
+        //                 'prod_unit' => $item->prod_unit,
+        //                 'prod_group' => $item->prod_group,
+        //                 'LOT_NUMBER' => $item->LOT_NUMBER,
+        //                 'iss_qty' => $item->iss_qty,
+        //                 'expired_date' => $item->expired_date,
+        //                 'LOCATION_NO' => $item->LOCATION_NO,
+        //                 'CUSTOMER_CODE' => $item->CUSTOMER_CODE,
+        //                 'CUST_NAME' => $item->CUST_NAME,
+        //                 'exp_date' => $item->exp_date,
+        //                 'actual_date' => $item->actual_date,
+        //                 'loading_date' => $item->loading_date,
+        //                 'execdate' => $item->execdate,
+        //                 'exp_no' => $item->exp_no,
+        //                 'exp_status' => $item->exp_status,
+        //                 'forwarder' => $item->forwarder,
+        //                 'resi_number' => $item->resi_number,
+        //                 'jumlah' => $item->jumlah,
+        //                 'total_vol' => $item->total_vol,
+        //                 'total_weight' => $item->total_weight,
+        //                 'fetch_date' => $fetchDate->format('Y-m-d H:i:s'), //ini format dari sql
+        //             ];
+        //             $filters = [
+        //                 'ISS_NO' => $item->ISS_NO,
+        //                 // convert fetch_date from sql, fetch_date is datetime format in sql
+        //                 // 'FETCH_DATE' => date("Y-m-d", strtotime($fetchDate)),
+        //                 'fetch_date' => Carbon::parse()->format('Y-m-d H:i:s'),
+        //             ];
+
+        //             // printf("Now: %s", $fetchDate);
+        //             // printf("Right now is %s", Carbon::now()->toDateTimeString());
+
+        //             $existingData = PivotMrpBpb::where('ISS_NO', $item->ISS_NO)
+        //                 ->where('ISS_NO', $item->ISS_NO)
+        //                 ->where('fetch_date', $item->fetch_date)
+        //                 // ->whereDate('fetch_date', Carbon::parse()->format('Y-m-d H:i:s'))
+        //                 // ->whereRaw("DATE_FORMAT(fetch_date, '%Y-%m-%d') = '" . Carbon::now()->format('Y-m-d') . "'")
+        //                 // ->where(DB::raw("(STR_TO_DATE(fetch_date,'%Y/%m/%d'))"), ">=", $fetchDate)
+        //                 ->get();
+        //             if ($existingData) {
+        //                 $deletedData[] = $existingData;
+        //                 PivotMrpBpb::where($filters)
+        //                     // ->where($filters)
+        //                     ->where('ISS_NO', $item->ISS_NO)
+        //                     ->where('fetch_date', $item->fetch_date)
+        //                     // ->whereDate('fetch_date', Carbon::parse()->format('Y-m-d H:i:s'))
+        //                     // ->whereRaw("DATE_FORMAT(fetch_date, '%Y-%m-%d') = '" . Carbon::now()->format('Y-m-d') . "'")
+        //                     // ->where(DB::raw("(STR_TO_DATE(fetch_date,'%Y/%m/%d'))"), ">=", $fetchDate)
+        //                     ->delete();
+        //             }
+        //             // PivotMrpBpb::Insert($dataToInsert);
+        //         }
+
+        //         if (!empty($deletedData)) {
+        //             return response()->json([
+        //                 'status' => true,
+        //                 'coba_timedate' => $filters,
+        //                 'message' => 'Data Available Inserted and Updated successfully to mysql_local pivot_mrp_bpb.',
+        //                 'data' => $result->map(function ($item) use ($fetchDate) {
+        //                     return array_merge($item->toArray(), ['fetch_date' => $fetchDate->format('Y-m-d H:i:s')]);
+        //                 }),
+        //                 'deleted_data' => $deletedData,
+        //             ], 200);
+        //         } else {
+        //             return response()->json([
+        //                 'status' => false,
+        //                 'message' => 'Data Not Available',
+        //                 'data' => null,
+        //             ], 404);
+        //         }
+        //     }
+        // } catch (\Exception $e) {
+        //     Log::error('Error fetching or inserting/updating data:' . $e->getMessage());
+        //     return response()->json([
+        //         'status' => false,
+        //         'message' => 'Error fetching or inserting/updating data',
+        //         'error' => $e->getMessage(),
+        //     ], 500);
+        // }

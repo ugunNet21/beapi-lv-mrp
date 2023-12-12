@@ -1,0 +1,123 @@
+# version: '3'
+# services:
+#   app:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     ports:
+#       - "8000:8080"
+#     volumes:
+#       - .:/var/www/html
+
+# version: "3.7"
+# services:
+#   app:
+#     build:
+#       args:
+#         user: ugun
+#         uid: 1000
+#       context: ./
+#       dockerfile: Dockerfile
+#     image: sb
+#     container_name: sb-app
+#     restart: unless-stopped
+#     working_dir: /var/www/
+#     volumes:
+#       - ./:/var/www
+#     networks:
+#       - sb
+
+#   db:
+#     image: mysql:5.7
+#     container_name: travellist-db
+#     restart: unless-stopped
+#     environment:
+#       MYSQL_DATABASE: ${DB_DATABASE}
+#       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+#       MYSQL_PASSWORD: ${DB_PASSWORD}
+#       MYSQL_USER: ${DB_USERNAME}
+#       SERVICE_TAGS: dev
+#       SERVICE_NAME: mysql
+#     volumes:
+#       - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+#     networks:
+#       - sb
+
+#   nginx:
+#     image: nginx:alpine
+#     container_name: sb-nginx
+#     restart: unless-stopped
+#     ports:
+#       - 8000:80
+#     volumes:
+#       - ./:/var/www
+#       - ./docker-compose/nginx:/etc/nginx/conf.d/
+#     networks:
+#       - sb
+
+# networks:
+#   sb:
+#     driver: bridge
+
+# ini jalan nginx
+version: '3.8'
+
+services:
+    app:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: my-laravel-app
+        container_name: laravel-app
+        restart: unless-stopped
+        working_dir: /var/www
+        volumes:
+            - .:/var/www
+        networks:
+            - laravel-network
+
+    db1:
+        image: mysql:8.0
+        container_name: mysql_local
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: db_forbsp_local
+            MYSQL_ROOT_PASSWORD: db_forbsp_local
+            MYSQL_USER: root
+            MYSQL_PASSWORD:
+        volumes:
+            - mysql-data:/var/lib/mysql
+        networks:
+            - laravel-network
+    db2:
+        image: mysql:8.0
+        container_name: mysql_server
+        restart: unless-stopped
+        environment:
+            MYSQL_DATABASE: db_forbsp
+            MYSQL_ROOT_PASSWORD: bsp
+            MYSQL_USER: bsp
+            MYSQL_PASSWORD: bsp1234
+        volumes:
+            - mysql-data:/var/lib/mysql
+        networks:
+            - laravel-network
+
+    nginx:
+        image: nginx:alpine
+        container_name: nginx-server
+        restart: unless-stopped
+        ports:
+            - "8080:80"
+        volumes:
+            - ./docker/nginx:/etc/nginx - .:/var/www
+        depends_on:
+            - app
+        networks:
+            - laravel-network
+networks:
+    laravel-network:
+        driver: bridge
+
+volumes:
+    mysql-data:
