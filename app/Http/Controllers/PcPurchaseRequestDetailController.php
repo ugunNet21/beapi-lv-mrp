@@ -19,17 +19,29 @@ class PcPurchaseRequestDetailController extends Controller
         try {
             $fetchDate = Carbon::now();
             $no_PR = $request->input('no_pr');
-            $result = PcPurchaseReqsDetail::where('No_PR', '=', $no_PR)->get();
+            // Menggunakan Eloquent untuk mengambil data dengan relasi
+            if ($no_PR) {
+                $result = PcPurchaseReqsDetail::with('purchaseRequest')->where('No_PR', '=', $no_PR)->get();
+            } else {
+                $result = PcPurchaseReqsDetail::with('purchaseRequest')->get();
+            }
+            // $result = PcPurchaseReqsDetail::where('No_PR', '=', $no_PR)->get();
+
             $batchSize = 50;
             $dataToInserts = [];
             $index = [];
             if ($result->count() > 0) {
-                BisPcRFQReqsDetail::where(
-                    DB::raw("DATE_FORMAT(fetch_date, '%Y-%m-%d')"),
-                    '=',
-                    $fetchDate->format('Y-m-d')
-                )
-                    ->delete();
+                // Hapus duplikasi berdasarkan fetch_date dan No_PR
+                BisPcRFQReqsDetail::where(function ($query) use ($fetchDate, $no_PR) {
+                    $query->where(DB::raw("DATE_FORMAT(fetch_date, '%Y-%m-%d')"), '=', $fetchDate->format('Y-m-d'))
+                        ->orWhere('No_PR', '=', $no_PR);
+                })->delete();
+                // BisPcRFQReqsDetail::where(
+                //     DB::raw("DATE_FORMAT(fetch_date, '%Y-%m-%d')"),
+                //     '=',
+                //     $fetchDate->format('Y-m-d')
+                // )
+                //     ->delete();
                 foreach ($result as $index => $item) {
                     $dataToInsert = [
                         'No_PR' => $item->No_PR,
